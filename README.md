@@ -1,3 +1,14 @@
+To start You must install yii framework 
+
+use command on app: "php yii"
+
+*change connect by db name.
+
+Import db in forder db
+
+or use command: " yii migrate"
+
+
 Yii 2 Advanced Project Template
 ===============================
 
@@ -19,7 +30,7 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 DIRECTORY STRUCTURE
 -------------------
 
-```
+
 common
     config/              contains shared configurations
     mail/                contains view files for e-mails
