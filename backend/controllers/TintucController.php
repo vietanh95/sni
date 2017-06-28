@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\filters\AccessControl;
+
 
 /**
  * TintucController implements the CRUD actions for Tintuc model.
@@ -21,6 +23,20 @@ class TintucController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -68,8 +84,14 @@ class TintucController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $model->time_up = date('Y-m-d H:i:s');
-            $model->hinhanh_tt = UploadedFile::getInstance($model, 'hinhanh_tt');
-
+             $model->hinhanh_tt = UploadedFile::getInstance($model, 'hinhanh_tt');              
+            if($model->hinhanh_tt != ""){
+                $model->hinhanh_tt->saveAs('uploads/' . time() . $model->hinhanh_tt);
+                $model->hinhanh_tt = 'uploads/' . time() . $model->hinhanh_tt;     
+            }
+            else{
+                $model->hinhanh_tt = $imageOld;                  
+            }
             $model->save();
             return $this->redirect(['view', 'id' => $model->id_tt]);
         } else {
@@ -88,22 +110,22 @@ class TintucController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        /*$link = Yii::getAlias('@webroot');  
+        print_r($link);*/
+        
+        $imageOld = $model->hinhanh_tt;
         if ($model->load(Yii::$app->request->post())) {
-            $model->hinhanh_tt = UploadedFile::getInstance($model, 'hinhanh_tt');
-            if($model->hinhanh_tt == ""){
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id_tt]);
+             $model->hinhanh_tt = UploadedFile::getInstance($model, 'hinhanh_tt');              
+            if($model->hinhanh_tt != ""){
+                $model->hinhanh_tt->saveAs('uploads/' . time() . $model->hinhanh_tt);
+                $model->hinhanh_tt = 'uploads/' . time() . $model->hinhanh_tt;     
             }
             else{
-                $model->hinhanh_tt->saveAs('uploads/' . time() . '.' . $model->hinhanh_tt);
-                $model->hinhanh_tt = 'uploads/' . time() . $model->hinhanh_tt;   
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id_tt]);
+                $model->hinhanh_tt = $imageOld;                              
             }
-            /*echo "<pre>";
-            print_r($model->hinhanh_tt);
-            die();*/
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->id_tt]);
+
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -140,3 +162,4 @@ class TintucController extends Controller
         }
     }
 }
+

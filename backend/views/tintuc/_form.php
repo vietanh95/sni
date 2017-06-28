@@ -26,8 +26,6 @@ use dosamigos\ckeditor\CKEditor;
 
     <?= $form->field($model, 'hinhanh_tt')->fileInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'hinhanh_tt')->textInput(['maxlength' => true]) ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <?= Html::a('Hủy',Yii::$app->request->baseUrl.'/../web/index.php/tintuc/' , ['class'=>'btn btn-danger']) ?>

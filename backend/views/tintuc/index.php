@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\TintucSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tintucs';
+$this->title = 'Tin tức';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tintuc-index">
@@ -44,21 +44,15 @@ $this->params['breadcrumbs'][] = $this->title;
             //'noidung_tt',
             'id_trangthai_tt',
             'video_tt',
-            'hinhanh_tt',/*
-            array(
-            'format' => 'text',
+            'hinhanh_tt',
+           /* array(
+            'format' => 'image',
             'attribute'=>'video_tt',
-            'value'=>'video_tt',
             ),
-
             array(
             'format' => 'image',
             'attribute'=>'hinhanh_tt',
-            //get duong dan de tro vao img
-            'value' => function ($model) {
-                return $model->getImageUrl(); 
-            },
-            ), */           
+            ),         */  
             'time_up',
 
             ['class' => 'yii\grid\ActionColumn'],

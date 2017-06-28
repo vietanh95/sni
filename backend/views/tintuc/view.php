@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Tintuc */
 
 $this->title = $model->id_tt;
-$this->params['breadcrumbs'][] = ['label' => 'Tintucs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tin tức', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tintuc-view">
@@ -30,12 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_tt',
             'tieude_tt',
-            //'noidung_tt',
-            [
-                'attribute'=>'noidung_tt',
-                'value'=>($model->noidung_tt),
-                
-            ],
+            'noidung_tt:html',           
             'id_trangthai_tt',
             'video_tt',
             'hinhanh_tt',
