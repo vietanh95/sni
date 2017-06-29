@@ -43,16 +43,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'tieude_tt',
             //'noidung_tt',
             'id_trangthai_tt',
-            'video_tt',
-            'hinhanh_tt',
-           /* array(
-            'format' => 'image',
-            'attribute'=>'video_tt',
+            /*'video_tt',
+            'hinhanh_tt',*/
+            array(
+                'attribute'=>'hinhanh_tt',
+                'format' => 'html',
+                'value' => function($data) { return Html::img($data->hinhanh_tt, ['width'=>'50px']);},
             ),
             array(
-            'format' => 'image',
-            'attribute'=>'hinhanh_tt',
-            ),         */  
+                'attribute' => 'hinhanh_tt',
+                'format' => 'html',
+                'value' => function($data) { return Html::img($data->hinhanh_tt, ['width'=>'50px']); },
+            ),        
             'time_up',
 
             ['class' => 'yii\grid\ActionColumn'],

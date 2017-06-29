@@ -21,7 +21,6 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
-
              'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
@@ -30,7 +29,7 @@ class UserController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','create','update','delete','view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
