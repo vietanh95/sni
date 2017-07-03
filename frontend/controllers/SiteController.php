@@ -12,6 +12,10 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use backend\models\Tintuc;
+use backend\models\User;
+use backend\models\loai;
+use yii\db\Query;
 
 /**
  * Site controller
@@ -72,9 +76,29 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
 
+        $query = new Query;
+        $query  ->select('*')  
+                 ->from('tintuc')
+                 ->join( 'left join', 
+                         'user',
+                         'user.id =tintuc.id'
+                     ); 
+        $command = $query->createCommand();
+        $data = $command->queryAll();    
+
+        //$model = Tintuc::find()->all();
+        /*echo "<pre>";
+        print_r($model);
+        echo "</pre>";
+        die();*/
+        //$model = Tintuc::find()->all();
+        /*echo "<pre>";
+        print_r($model);
+        echo "</pre>";
+        die();*/
+        return $this->render('index',['data'=>$data]);
+    }
     /**
      * Logs in a user.
      *

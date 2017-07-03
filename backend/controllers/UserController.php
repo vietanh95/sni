@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -82,10 +83,25 @@ class UserController extends Controller
         $model->status = 10;
         $model->created_at = time();
         $model->updated_at = time();  
-        $model->auth_key = Yii::$app->security->generateRandomString();        
+        $model->auth_key = Yii::$app->security->generateRandomString();
+
+        $path = Yii::getAlias("@web");
+        $imageOld = $model->image_user;
+
         if ($model->load(Yii::$app->request->post())) {
             $pass = Yii::$app->security->generatePasswordHash($model->password_hash);
             $model->password_hash = $pass;
+
+            $model->image_user = UploadedFile::getInstance($model, 'image_user');              
+            if($model->image_user != ""){
+                $model->image_user->saveAs('uploads/' . time() . $model->image_user);
+                $model->image_user = $path.'/uploads/' . time() . $model->image_user;     
+            }
+            else{
+                $model->image_user = $path.$imageOld;                  
+            }
+
+
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -104,7 +120,23 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $path = Yii::getAlias("@web");
+        $imageOld = $model->image_user;
+
+        if ($model->load(Yii::$app->request->post())) {
+
+
+            $model->image_user = UploadedFile::getInstance($model, 'image_user');              
+            if($model->image_user != ""){
+                $model->image_user->saveAs('uploads/' . time() . $model->image_user);
+                $model->image_user = $path.'/uploads/' . time() . $model->image_user;     
+            }
+            else{
+                $model->image_user = $path.$imageOld;                  
+            }
+
+
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -141,4 +173,5 @@ class UserController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+        
 }

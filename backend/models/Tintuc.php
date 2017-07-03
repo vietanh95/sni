@@ -56,8 +56,5 @@ class Tintuc extends \yii\db\ActiveRecord
             'time_up' => 'Thời gian đã đăng',
         ];
     }
-    public function getImageUrl()
-{
-    return Yii::getAlias('@webroot/' . $this->hinhanh_tt, true);
-}
+    
 }

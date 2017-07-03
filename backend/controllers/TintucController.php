@@ -63,7 +63,6 @@ class TintucController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
     /**
      * Displays a single Tintuc model.
      * @param integer $id
@@ -84,18 +83,23 @@ class TintucController extends Controller
     public function actionCreate()
     {
         $model = new Tintuc();
+        
         $path = Yii::getAlias("@web");
+        $imageOld = $model->hinhanh_tt;
+
         if ($model->load(Yii::$app->request->post())) {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $model->time_up = date('Y-m-d H:i:s');
-             $model->hinhanh_tt = UploadedFile::getInstance($model, 'hinhanh_tt');              
+
+            $model->hinhanh_tt = UploadedFile::getInstance($model, 'hinhanh_tt');              
             if($model->hinhanh_tt != ""){
                 $model->hinhanh_tt->saveAs('uploads/' . time() . $model->hinhanh_tt);
                 $model->hinhanh_tt = $path.'/uploads/' . time() . $model->hinhanh_tt;     
             }
             else{
-                $model->hinhanh_tt = $path.$imageOld;                  
+                $model->hinhanh_tt = $imageOld;                  
             }
+
             $model->save();
             return $this->redirect(['view', 'id' => $model->id_tt]);
         } else {
@@ -125,7 +129,7 @@ class TintucController extends Controller
                 $model->hinhanh_tt = $path.'/uploads/' . time() . $model->hinhanh_tt;     
             }
             else{
-                $model->hinhanh_tt = $path.$imageOld;                              
+                $model->hinhanh_tt = $imageOld;                              
             }
             $model->save();
             return $this->redirect(['view', 'id' => $model->id_tt]);

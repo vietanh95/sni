@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::button('Create User', ['value'=>Url::to(Yii::$app->request->baseUrl.'/index.php/user/create/'), 'class' => 'btn btn-success','id'=>'modalbutton']) ?>
@@ -30,17 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         Modal::end();
 
     ?>
+     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'username',
+            'image_user',
             'auth_key',
-            'password_hash',
-            'password_reset_token',
+            //'password_hash',
+            //'password_reset_token',
             // 'email:email',
             // 'status',
             // 'created_at',

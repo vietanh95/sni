@@ -38,6 +38,7 @@ class User extends \yii\db\ActiveRecord
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
+            [['image_user'], 'string'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
             ['password_hash', 'string', 'min' => 6],
@@ -52,6 +53,7 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'username' => 'Username',
+            'image_user' => 'Hình ảnh cá nhân',
             'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'password_reset_token' => 'Password Reset Token',

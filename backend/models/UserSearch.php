@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email'], 'safe'],
+            [['username', 'auth_key', 'image_user' ,'Global_search' ,'password_hash', 'password_reset_token', 'email'], 'safe'],
         ];
     }
 
@@ -39,6 +39,7 @@ class UserSearch extends User
      *
      * @return ActiveDataProvider
      */
+    public $Global_search;
     public function search($params)
     {
         $query = User::find();
@@ -58,18 +59,19 @@ class UserSearch extends User
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
+       /* $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-        ]);
+        ]);*/
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email]);
+        $query->orFilterWhere(['like', 'username', $this->Global_search])
+            ->orFilterWhere(['like', 'auth_key', $this->Global_search])
+            ->orFilterWhere(['like', 'password_hash', $this->Global_search])
+            ->orFilterWhere(['like', 'password_reset_token', $this->Global_search])
+            ->orFilterWhere(['like', 'email', $this->Global_search])
+            ->orFilterWhere(['like', 'image_user', $this->Global_search]);
 
         return $dataProvider;
     }
